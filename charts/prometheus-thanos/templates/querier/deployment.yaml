@@ -8,6 +8,9 @@ metadata:
     helm.sh/chart: {{ include "prometheus-thanos.chart" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
+    {{- with .Values.querier.additionalLabels }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
 spec:
   replicas: {{ .Values.querier.replicaCount }}
   strategy:
